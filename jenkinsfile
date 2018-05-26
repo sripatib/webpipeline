@@ -2,21 +2,21 @@ pipeline {
    agent any
 
    stages {
-     stage(launch VM){
+     stage('launch VM'){
        steps {
-         sh ansible-playbook playbook/ec2.yml
+         sh 'ansible-playbook playbook/ec2.yml'
        }
      }
 
-      stage(update host entry){
+      stage('update host entry'){
          steps {
-           sh bash script/updatehost.sh
+           sh 'bash script/updatehost.sh'
          }
       }
 
-      stage(install and configure webserver){
+      stage('install and configure webserver'){
            steps {
-             sh ansible-playbook playbook/webserver.yml
+             sh 'ansible-playbook playbook/webserver.yml'
            }
       }
 
