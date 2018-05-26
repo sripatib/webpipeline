@@ -1,0 +1,27 @@
+- hosts: localhost
+  remote_user: root
+  tasks:
+  - name: web server ec2 group
+    ec2_group:
+      name: webserver
+      description: web config
+      vpc_id: vpc-dd8dfeb4
+      region: us-east-2
+      rules:
+        - proto: tcp
+          ports:
+            - 80
+            - 22
+          cidr_ip: 0.0.0.0/0
+  - ec2:
+      key_name: ansible
+      group: webserver
+      instance_type: t2.micro
+      image: ami-03291866
+      wait: yes
+      count: 3
+      region: us-east-2
+      vpc_subnet_id: subnet-def7b6b7
+      assign_public_ip: yes
+      instance_tags: 
+        Name: web

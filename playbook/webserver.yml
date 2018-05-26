@@ -1,0 +1,29 @@
+- hosts: web
+  remote_user: ec2-user
+  become: yes
+  tasks:
+   # This pause is mandatory, otherwise the existing control connection gets reused!
+  - pause: seconds=30
+  
+   # Now we will run a local 'ansible -m ping' on this host until it returns.
+   # This works with the existing ansible hosts inventory and so any custom ansible_ssh_hosts definitions are being used
+  - local_action: shell ansible -u ec2-user -m ping web
+    register: result
+    until: result.rc == 0
+    retries: 30
+    delay: 10
+  - name: ensure apache is at the latest version
+    yum:
+      pkg: httpd
+      state: present
+  - name: Start service httpd, if not running
+    service:
+      name: httpd
+      state: started
+  - name: example copying file with owner and permissions
+    copy:
+      src: indexfile
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644
