@@ -16,7 +16,7 @@ pipeline {
 
       stage('install and configure webserver'){
            steps {
-             sh 'ansible-playbook playbook/webserver.yml --key-file /root/key.pem'
+             sh 'ansible-playbook playbook/webserver.yml --key-file /var/lib/jenkins/key.pem'
            }
       }
 
