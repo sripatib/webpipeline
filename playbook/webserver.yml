@@ -22,7 +22,7 @@
       state: started
   - name: example copying file with owner and permissions
     copy:
-      src: indexfile
+      src: ../indexfile
       dest: /var/www/html/index.html
       owner: root
       group: root
