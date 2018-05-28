@@ -25,3 +25,4 @@
       assign_public_ip: yes
       instance_tags: 
         Name: web
+  - pause: seconds=180
