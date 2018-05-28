@@ -3,15 +3,15 @@
   become: yes
   tasks:
    # This pause is mandatory, otherwise the existing control connection gets reused!
-  - pause: seconds=30
+  - pause: seconds=180
   
    # Now we will run a local 'ansible -m ping' on this host until it returns.
    # This works with the existing ansible hosts inventory and so any custom ansible_ssh_hosts definitions are being used
-  - local_action: shell ansible -u ec2-user -m ping web --key-file /var/lib/jenkins/key.pem
-    register: result
-    until: result.rc == 0
-    retries: 30
-    delay: 10
+  #- local_action: shell ansible -u ec2-user -m ping web --key-file /var/lib/jenkins/key.pem
+  #  register: result
+  #  until: result.rc == 0
+  #  retries: 30
+  #  delay: 10
   - name: ensure apache is at the latest version
     yum:
       pkg: httpd
